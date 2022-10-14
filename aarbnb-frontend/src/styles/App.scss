@@ -1,0 +1,22 @@
+@import "~bootstrap/scss/bootstrap";
+@import "grid.scss";
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 8vh;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  font-size: 2rem;
+  color: white;
+  padding-left: 1rem;
+}
+
+
+.App-container {
+  margin: 1rem 8rem;
+}

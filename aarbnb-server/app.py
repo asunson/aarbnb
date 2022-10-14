@@ -1,0 +1,36 @@
+from flask import Flask, request, send_from_directory, Blueprint
+# import request_store
+import uuid
+import time
+from .models import AppRequest
+from . import app, db
+
+
+@app.route("/", defaults={'path': ''})
+def serve(path):
+    return send_from_directory(app.static_folder, 'index.html')
+
+
+@app.route("/api/requests", methods=["GET", "POST"])
+def handleRequests():
+    if request.method == "GET":
+        appRequests = AppRequest.query.all()
+        return
+
+    elif request.method == "POST":
+        # savedId = request_store.saveRequest(request.data)
+        newId = str(uuid.uuid1())
+
+        appRequest = request.json
+
+        newRequest = AppRequest(
+            subject=appRequest["subject"],
+            description=appRequest["description"],
+            user=appRequest["user"],
+            timestamp=int(time.time())
+        )
+
+        db.session.add(newRequest)
+        db.session.commit()
+
+        return newId

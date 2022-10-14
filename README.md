@@ -2,18 +2,18 @@
 One stop shop for all things Aarbnb
 
 # Project roadmap
-[ ] User can see an application
-[ ] Host can see all submitted requests
-[ ] Only authorised users should be able to visit the application
-[ ] User can create an account
-[ ] Host has their own "Host" view
-[ ] Host can manage requests
-[ ] Host is notified when requests are submitted
-[ ] User should be notified when request statuses change
-[ ] --- MVP Ready ---
-[ ] User can view their own profile
-[ ] User can have request shortcuts
-[ ] User can create custom shortcuts
+- [x] User can see an application
+- [ ] Host can see all submitted requests
+- [ ] Only authorised users should be able to visit the application
+- [ ] User can create an account
+- [ ] Host has their own "Host" view
+- [ ] Host can manage requests
+- [ ] Host is notified when requests are submitted
+- [ ] User should be notified when request statuses change
+- [ ] --- MVP Ready ---
+- [ ] User can view their own profile
+- [ ] User can have request shortcuts
+- [ ] User can create custom shortcuts
 
 # Feature Stories
 User can see an application
@@ -22,7 +22,7 @@ User can see an application
 **Then** I see the Aarbnb logo
 **And** I see a button "Make a Request"
 **When** I click the button
-**Then** I see a submission form for a request that allows a use to input a title and notes
+**Then** I see a submission form for a request that allows a user to input a title and notes
 **When** I fill out the form and submit a request
 **Then** I see a notification indicating the "Request has successfully been submitted"
 
