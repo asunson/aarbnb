@@ -1,58 +1,37 @@
-import { useState } from 'react';
-import { Alert, Button } from 'react-bootstrap';
-import './styles/App.scss';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Header } from './layouts/Header';
-import { RequestModal } from './layouts/RequestModal';
-import { AppRequest } from './types/types';
-import { RestApplicationClient } from './services/requestService';
+import { HomePage } from './layouts/HomePage';
+import { HostPage } from './layouts/HostPage';
 import { HttpClient } from './services/httpClient';
+import { RestApplicationClient } from './services/requestService';
+import './styles/App.scss';
 
-const requestService = new RestApplicationClient(new HttpClient());
+const restApplicationClient = new RestApplicationClient(new HttpClient());
 
 function App() {
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [requestSubmitted, setRequestSubmitted] = useState<boolean>(false);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage
+        requestService={restApplicationClient}
+      />,
+    },
+    {
+      path: "/host",
+      element: <HostPage requestService={restApplicationClient}/>
+    }
+  ]);
 
-
-  const onConfirm = (request: AppRequest) => {
-    requestService.saveRequest(request)
-      .then(id => {
-        alert(`submitted request with id: ${id}`);
-        setRequestSubmitted(true);
-      })
-      .catch(e => console.log(e))
-      .finally(() => setShowModal(false))
-  };
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Header />
-      </header>
-      <body>
-        <div className="App-container">
-          <Alert
-            variant="success"
-            onClose={() => setRequestSubmitted(false)}
-            show={requestSubmitted}
-            dismissible
-          >
-            Your request has succuessfully been submitted!
-          </Alert>
-
-          <RequestModal
-            showModal={showModal}
-            onConfirm={onConfirm}
-            onCancel={() => setShowModal(false)}
-          />
-
-          <Button onClick={() => setShowModal(true)} className="mtr">
-            Make a Request
-          </Button>
-        </div>
-      </body>
-    </div>
-  );
+  return <div className="App">
+    <header className="App-header">
+      <Header />
+    </header>
+    <body>
+      <div className="App-container">
+        <RouterProvider router={router} />
+      </div>
+    </body>
+  </div>
 }
 
 export default App;

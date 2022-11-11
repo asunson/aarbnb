@@ -3,7 +3,7 @@ One stop shop for all things Aarbnb
 
 # Project roadmap
 - [x] User can see an application
-- [ ] Host can see all submitted requests
+- [x] Host can see all submitted requests
 - [ ] Only authorised users should be able to visit the application
 - [ ] User can create an account
 - [ ] Host has their own "Host" view
