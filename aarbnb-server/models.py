@@ -1,6 +1,7 @@
 from . import db
 import random
 
+
 class AppRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     subject = db.Column(db.String)
@@ -9,11 +10,20 @@ class AppRequest(db.Model):
     timestamp = db.Column(db.Integer)
 
     def __init__(self, subject, description, user, timestamp):
-        self.id=random.randint(0, 999999999)
-        self.subject=subject
-        self.description=description
-        self.user=user
-        self.timestamp=timestamp
+        self.id = random.randint(0, 999999999)
+        self.subject = subject
+        self.description = description
+        self.user = user
+        self.timestamp = timestamp
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "subject": self.subject,
+            "description": self.description,
+            "user": self.user,
+            "timestamp": self.timestamp,
+        }
 
 
 class User(db.Model):

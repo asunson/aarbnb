@@ -30,6 +30,6 @@ const resolveOrRejectPromise = (request: RestResponse<any>): RestResponse<any> =
                     status: response.status,
                     data: response.data
                 })
-            }                
-        }) 
+            }
+        })
 }

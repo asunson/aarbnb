@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory, Blueprint
+from flask import Flask, jsonify, request, send_from_directory, Blueprint
 # import request_store
 import uuid
 import time
@@ -15,7 +15,8 @@ def serve(path):
 def handleRequests():
     if request.method == "GET":
         appRequests = AppRequest.query.all()
-        return appRequests
+        print(appRequests)
+        return jsonify([a.serialize() for a in appRequests])
 
     elif request.method == "POST":
         # savedId = request_store.saveRequest(request.data)
@@ -34,6 +35,7 @@ def handleRequests():
         db.session.commit()
 
         return newId
+
 
 @app.route("/api/users", methods=["GET", "POST"])
 def handleUsers():

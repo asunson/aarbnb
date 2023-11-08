@@ -1,6 +1,7 @@
 import { RestApplicationClient } from "../services/requestService"
 
 export interface AppRequest {
+    id?: string,
     subject: string,
     description: string,
     user: string,

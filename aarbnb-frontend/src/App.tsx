@@ -1,37 +1,36 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Header } from './layouts/Header';
-import { HomePage } from './layouts/HomePage';
-import { HostPage } from './layouts/HostPage';
+import { RequestPage } from './routes/RequestPage';
 import { HttpClient } from './services/httpClient';
 import { RestApplicationClient } from './services/requestService';
 import './styles/App.scss';
+import { HostPage } from './routes/HostPage';
+import { HomePage } from './layouts/HomePage';
 
 const restApplicationClient = new RestApplicationClient(new HttpClient());
 
-function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <HomePage
-        requestService={restApplicationClient}
-      />,
-    },
-    {
-      path: "/host",
-      element: <HostPage requestService={restApplicationClient}/>
-    }
-  ]);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage
+      requestService={restApplicationClient}
+    />,
+  },
+  {
+    path: "/host",
+    element: <HostPage requestService={restApplicationClient} />
+  }
+]);
 
-  return <div className="App">
-    <header className="App-header">
+function App() {
+  return <>
+    <div className="App-header">
       <Header />
-    </header>
-    <body>
-      <div className="App-container">
-        <RouterProvider router={router} />
-      </div>
-    </body>
-  </div>
+    </div>
+    <div className="App-container">
+      <RouterProvider router={router} />
+    </div>
+  </>
 }
 
 export default App;

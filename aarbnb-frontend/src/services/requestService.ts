@@ -6,10 +6,10 @@ export class RestApplicationClient {
     }
 
     getRequests(): RestResponse<AppRequest[]> {
-        return this.httpClient.request({method: "GET", url: "/api/requests"})
+        return this.httpClient.request({ method: "GET", url: "/api/requests" })
     }
 
     saveRequest(appRequest: AppRequest): RestResponse<string> {
-        return this.httpClient.request({method: "POST", url: "/api/requests", data: appRequest})
+        return this.httpClient.request({ method: "POST", url: "/api/requests", data: appRequest })
     }
 }
