@@ -15,7 +15,6 @@ def serve(path):
 def handleRequests():
     if request.method == "GET":
         appRequests = AppRequest.query.all()
-        print(appRequests)
         return jsonify([a.serialize() for a in appRequests])
 
     elif request.method == "POST":
@@ -28,7 +27,7 @@ def handleRequests():
             subject=appRequest["subject"],
             description=appRequest["description"],
             user=appRequest["user"],
-            timestamp=int(time.time())
+            timestamp=int(time.time()) * 1000
         )
 
         db.session.add(newRequest)
