@@ -14,5 +14,18 @@
 
 .App-container {
   text-align: center;
-  margin: 1rem 8rem;
+  margin: 1rem 12rem;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+
+  > div, button {
+    margin-bottom: 1rem;
+  }
+}
+
+.align-left {
+  text-align: left;
 }

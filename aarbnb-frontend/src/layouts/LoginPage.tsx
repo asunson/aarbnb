@@ -44,7 +44,7 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
   );
 
   return (
-    <>
+    <div className="form-login">
       <TextInput
         value={loginForm.email}
         onChange={(email: string) =>
@@ -70,7 +70,7 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
         Log-in
       </Button>
       <Button onClick={() => setShowLogin(false)}>Sign-up</Button>
-    </>
+    </div>
   );
 };
 
