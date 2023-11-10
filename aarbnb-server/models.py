@@ -1,9 +1,9 @@
-import random
-
-from . import app, bcrypt, db
+from . import bcrypt, db
 
 
 class AppRequest(db.Model):
+    __tablename__ = "app_request"
+
     id = db.Column(db.String, primary_key=True)
     subject = db.Column(db.String)
     description = db.Column(db.String)
@@ -28,6 +28,8 @@ class AppRequest(db.Model):
 
 
 class User(db.Model):
+    __tablename__ = "user"
+
     id = db.Column(db.String, primary_key=True)
     email = db.Column(db.String, unique=True)
     name = db.Column(db.String)
@@ -43,9 +45,14 @@ class User(db.Model):
         self.password = bcrypt.generate_password_hash(password)
         self.is_host = is_host
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "name": self.name,
+            "phone": self.phone,
+            "isHost": self.is_host,
+        }
+
     def validate(self, candidate: str) -> bool:
         return bcrypt.check_password_hash(self.password, candidate)
-
-
-# with app.app_context():
-#     db.create_all()

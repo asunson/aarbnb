@@ -1,4 +1,9 @@
-import { AppRequest, TokenRequest, TokenResponse, UserRequest } from "../types";
+import {
+  AppRequest,
+  SessionResponse,
+  TokenRequest,
+  UserRequest,
+} from "../types";
 import { HttpClient, RestResponse } from "./httpClient";
 
 export type RequestService = Pick<
@@ -39,13 +44,12 @@ export class RestApplicationClient {
   createUser(userRequest: UserRequest): RestResponse<string> {
     return this.httpClient.request({
       method: "POST",
-      url: "/api/users",
+      url: "/api/users/new",
       data: userRequest,
-      token: this.token,
     });
   }
 
-  getToken(tokenRequest: TokenRequest): RestResponse<TokenResponse> {
+  getToken(tokenRequest: TokenRequest): RestResponse<SessionResponse> {
     return this.httpClient.request({
       method: "POST",
       url: "/api/token",

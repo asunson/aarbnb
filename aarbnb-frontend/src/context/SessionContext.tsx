@@ -1,20 +1,27 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useState } from "react";
+import { User } from "../types";
 
-interface TokenContextProps {
+interface SessionContextProps {
   token: string | null;
   saveToken: (token: string) => void;
   removeToken: () => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
-const TokenContext = createContext<TokenContextProps>({
+const SessionContext = createContext<SessionContextProps>({
   token: null,
   saveToken: () => null,
   removeToken: () => null,
+  user: null,
+  setUser: () => null,
 });
 
-export const useTokenContext = () => useContext(TokenContext)
+export const useSessionContext = () => useContext(SessionContext);
 
-export const TokenContextProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
+export const SessionContextProvider: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
   const getToken = (): string | null => {
     const userToken = localStorage.getItem("token");
     return userToken && userToken;
@@ -31,11 +38,13 @@ export const TokenContextProvider: React.FC<{ children: React.ReactNode }> = ({c
   }, []);
 
   const [token, setToken] = useState<string | null>(getToken());
-
+  const [user, setUser] = useState<User | null>(null);
 
   return (
-    <TokenContext.Provider value={{token, saveToken, removeToken}}>
+    <SessionContext.Provider
+      value={{ token, saveToken, removeToken, user, setUser }}
+    >
       {children}
-    </TokenContext.Provider>
+    </SessionContext.Provider>
   );
 };

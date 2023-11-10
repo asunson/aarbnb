@@ -1,7 +1,9 @@
 # aarbnb
+
 One stop shop for all things Aarbnb
 
 # Project roadmap
+
 - [x] User can see an application
 - [x] Host can see all submitted requests
 - [ ] Only authorised users should be able to visit the application
@@ -16,6 +18,7 @@ One stop shop for all things Aarbnb
 - [ ] User can create custom shortcuts
 
 # Feature Stories
+
 User can see an application  
 **As** a user  
 **When** I visit the landing page  
@@ -24,22 +27,23 @@ User can see an application
 **When** I click the button  
 **Then** I see a submission form for a request that allows a user to input a title and notes  
 **When** I fill out the form and submit a request  
-**Then** I see a notification indicating the "Request has successfully been submitted"  
+**Then** I see a notification indicating the "Request has successfully been submitted"
 
 Host can see all submitted requests  
 **As** the host  
 **When** I visit "/host"  
 **Then** I see a list of all submitted requests  
 **When** I click on a request  
-**Then** I can see details for that request  
-    - Details include: title, timestamp, notes, user  
+**Then** I can see details for that request
+
+- Details include: title, timestamp, notes, user
 
 Only authorized users should be able to visit the application  
 **As** any user  
 **When** I visit the website for the first time on any route  
 **Then** I am prompted with a basic log-in screen asking for a password  
 **When** I successfully input the password, I am redirected to the landing page  
-**If** I incorrectly input the password, I see an error message saying "password is incorrect"  
+**If** I incorrectly input the password, I see an error message saying "password is incorrect"
 
 User can create an account  
 **As** a user  
@@ -52,30 +56,30 @@ User can create an account
 **If** I choose to log in  
 **Then** I see a prompt to log in by phone number/email  
 **And When** I successfully log in  
-**Then** I am redirected to the landing page  
+**Then** I am redirected to the landing page
 
 Host has their own "Host" view  
 **As** the host  
 **When** I visit the landing page  
 **Then** I see a view for pending/completed requests  
-**And** The "/host" route no longer exists  
+**And** The "/host" route no longer exists
 
 Host can manage requests  
 **As** the host  
 **When** I visit the landing page  
 **Then** I can manage my requests by marking them "To Do", "In Progress", or "Completed"  
 **When** I change a status  
-**Then** I see the requests organized into different columns by status  
+**Then** I see the requests organized into different columns by status
 
 Host is notified when requests are submitted  
 **As** a user  
 **When** I submit a request  
-**Then** the request is successfully submitted and host receives a push notification of the request  
+**Then** the request is successfully submitted and host receives a push notification of the request
 
 User should be notified when request statuses change  
 **As** the host  
 **When** I change the status of a request  
-**Then** a push notification is sent out to the user who submitted the request based on their preferred method of contact  
+**Then** a push notification is sent out to the user who submitted the request based on their preferred method of contact
 
 User can view their own profile  
 **As** a user  
@@ -83,7 +87,7 @@ User can view their own profile
 **Then** I see an option for "View Profile"  
 **When** I click "View Profile"  
 **Then** I see a profile page with my basic information  
-**And** I see a section listing out my submitted requests  
+**And** I see a section listing out my submitted requests
 
 User can have request shortcuts  
 **As** a user  
@@ -91,7 +95,7 @@ User can have request shortcuts
 **Then** I see a section "Shortcuts"  
 **And** within the section, I see a default shortcut with a water icon  
 **When** I click the water icon  
-**Then** a request is automatically submitted to the host asking for water  
+**Then** a request is automatically submitted to the host asking for water
 
 User can create custom shortcuts  
 **As** a user  
@@ -100,4 +104,17 @@ User can create custom shortcuts
 **When** I click the icon  
 **Then** I see a modal to create a custom request  
 **When** I finish creating the custom request  
-**Then** I see a new icon/name under "Shortcuts"  
+**Then** I see a new icon/name under "Shortcuts"
+
+## Gotchas
+
+Running `export DANGEROUSLY_DISABLE_HOST_CHECK=true` will get around a node issue for invalid allowedHosts when proxying to the server
+
+Initializing the sqllite db locally:
+
+```python
+from __init__ import app, db
+
+with app.app_context():
+    db.create_all()
+```

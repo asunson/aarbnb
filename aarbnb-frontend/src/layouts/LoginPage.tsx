@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useServicesContext } from "../context/ServicesContext";
-import { useTokenContext } from "../context/TokenContext";
+import { useSessionContext } from "../context/SessionContext";
 import { TokenRequest, UserRequest } from "../types";
 import { Chainable } from "../utils/chainable";
 import { TextInput } from "./Inputs";
@@ -28,7 +28,7 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
     password: "",
   });
   const { tokenService } = useServicesContext();
-  const { saveToken } = useTokenContext();
+  const { saveToken, setUser } = useSessionContext();
 
   const login = useCallback(
     (tokenRequest: TokenRequest) => {
@@ -36,10 +36,11 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
         .getToken(tokenRequest)
         .then((response) => {
           saveToken(response.token);
+          setUser(response?.user ?? null);
         })
         .catch((e) => console.error(e));
     },
-    [saveToken, tokenService]
+    [saveToken, setUser, tokenService]
   );
 
   return (

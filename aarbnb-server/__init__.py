@@ -8,5 +8,5 @@ app.config["SECRET_KEY"] = "some-secret for now"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 
 bcrypt = Bcrypt(app)
-db = SQLAlchemy(app)
 jwt = JWTManager(app)
+db = SQLAlchemy(app)

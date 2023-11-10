@@ -11,17 +11,18 @@ export interface TokenRequest {
   password: string;
 }
 
-export interface UserRequest {
-  id?: string;
+export interface User {
+  id: string;
   email: string;
   name: string;
   phone: string;
-  password: string;
   isHost: boolean;
 }
 
-export interface TokenResponse extends ApiSuccessResponse {
+export type UserRequest = Omit<User, "id"> & { password: string };
+export interface SessionResponse extends ApiSuccessResponse {
   token: string;
+  user: User | null;
 }
 
 export interface ApiSuccessResponse {

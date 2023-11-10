@@ -50,68 +50,78 @@ def handleRequests():
         return newId
 
 
-@app.route("/api/users", methods=["GET", "POST"])
+@app.route("/api/users", methods=["GET", "PUT"])
 @jwt_required()
 def handleUsers():
     if request.method == "GET":
         return User.query.all()
 
-    elif request.method == "POST":
-        create_user_request = request.json
-        is_new_user = create_user_request["id"] is None
-
-        if is_new_user:
-            newId = str(uuid.uuid4())
-            new_user = User(
-                id=newId,
-                email=create_user_request["email"],
-                name=create_user_request["name"],
-                phone=create_user_request["phone"],
-                password=create_user_request["password"],
-                is_host=create_user_request["isHost"],
-            )
-            db.session.add(new_user)
-            db.session.commit()
-            return newId
-
-        id = create_user_request["id"]
+    if request.method == "PUT":
+        user_request = request.json
+        id = user_request["id"]
         existing_user = User.query.get(id)
-        # add error handling here
+        if existing_user is None:
+            return FAILURE, 400
 
         # TODO refactor to be smarter here and handle undefined/empty fields
-        existing_user.email = create_user_request["email"]
-        existing_user.name = create_user_request["name"]
-        existing_user.phone = create_user_request["phone"]
-        existing_user.password = create_user_request["password"]
-        existing_user.is_host = create_user_request["isHost"]
+        existing_user.email = user_request["email"]
+        existing_user.name = user_request["name"]
+        existing_user.phone = user_request["phone"]
+        existing_user.password = user_request["password"]
+        existing_user.is_host = user_request["isHost"]
 
         db.session.commit()
-        return id
+
+
+# TODO: figure out a better flow to this - maybe some static phrase I need to hand out to everyone
+# store the default pass on in an .env file somewhere
+@app.route("/api/users/new", methods=["POST"])
+def create_user():
+    create_user_request = request.json
+    newId = str(uuid.uuid4())
+    new_user = User(
+        id=newId,
+        email=create_user_request["email"],
+        name=create_user_request["name"],
+        phone=create_user_request["phone"],
+        password=create_user_request["password"],
+        is_host=create_user_request["isHost"],
+    )
+    db.session.add(new_user)
+    db.session.commit()
+    return newId
 
 
 @app.route("/api/token", methods=["POST"])
 def create_token():
     email = request.json.get("email", None)
     if email is None:
-        return {"success": False}, 400
+        return FAILURE, 400
 
     password = request.json.get("password", None)
     if password is None:
-        return {"success": False}, 400
+        return FAILURE, 400
 
-    user: User | None = User.query.filter_by(email=email).first()
-    if User is None:
-        return {"success": False}, 400
-
-    is_test_creds = email == "test" and password == "test"
-    is_valid_creds = user.validate(password)
-
-    if is_test_creds or is_valid_creds:
+    # TODO: dedup code
+    if email == "test" and password == "test":
         access_token = create_access_token(identity=email)
         response = {"token": access_token, "success": True}
         return response, 200
 
-    return {"success": "False"}, 401
+    user: User | None = User.query.filter_by(email=email).first()
+    if user is None:
+        return FAILURE, 400
+
+    if user.validate(password):
+        access_token = create_access_token(identity=email)
+        response = {
+            "token": access_token,
+            "user": user.serialize(),
+            "success": True,
+        }
+        return jsonify(response), 200
+
+    return FAILURE, 401
 
 
 @app.route("/api/logout", methods=["POST"])
@@ -131,9 +141,12 @@ def refresh_expiring_jwts(response):
             access_token = create_access_token(identity=get_jwt_identity())
             data = response.get_json()
             if isinstance(data, dict):
-                data["access_token"] = access_token
+                data["token"] = access_token
                 response.data = json.dumps(data)
         return response
     except (RuntimeError, KeyError):
         # Case where there is not a valid JWT. Just return the original respone
         return response
+
+
+FAILURE = {"success": False}
