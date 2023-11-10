@@ -1,6 +1,6 @@
 import random
 
-from . import db
+from . import app, db
 
 
 class AppRequest(db.Model):
