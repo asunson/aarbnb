@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AppRequest, RequestService } from '../types/types';
+import { AppRequest, RequestService } from '../types';
 
 interface ViewRequestsPageProps {
     requestService: RequestService

@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
-import { AppRequest, RequestService } from '../types/types';
+import { useServicesContext } from '../context/ServicesContext';
+import { AppRequest } from '../types';
 import { RequestModal } from './RequestModal';
 
-interface HomePageProps {
-    requestService: RequestService
-}
-
-export const HomePage: React.FC<HomePageProps> = (props) => {
-    const {requestService} = props;
+export const HomePage: React.FC = () => {
+    const {requestService} = useServicesContext();
     const [showModal, setShowModal] = useState<boolean>(false);
     const [requestSubmitted, setRequestSubmitted] = useState<boolean>(false);
   

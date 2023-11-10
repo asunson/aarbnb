@@ -1,5 +1,6 @@
-from . import db
 import random
+
+from . import db
 
 
 class AppRequest(db.Model):
@@ -31,6 +32,8 @@ class User(db.Model):
     email = db.Column(db.String, unique=True)
     name = db.Column(db.String)
     phone = db.Column(db.String)
+    is_host = db.Column(db.Boolean)
+
 
 # with app.app_context():
 #     db.create_all()

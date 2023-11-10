@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { RestApplicationClient } from '../services/requestService';
-import { AppRequest } from '../types/types';
-import { Card } from 'react-bootstrap';
 import { DateTime } from 'luxon';
+import React, { useEffect, useState } from 'react';
+import { Card } from 'react-bootstrap';
+import { useServicesContext } from '../context/ServicesContext';
+import { AppRequest } from '../types';
 
-interface HostPageProps {
-    requestService: RestApplicationClient
-}
-
-export const HostPage: React.FC<HostPageProps> = (props) => {
-    const { requestService } = props;
+export const HostPage: React.FC = () => {
+    const { requestService } = useServicesContext();
     const [appRequests, setAppRequests] = useState<AppRequest[]>([]);
 
     useEffect(() => {

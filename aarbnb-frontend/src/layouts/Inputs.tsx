@@ -6,14 +6,15 @@ interface TextInputProps {
     onChange: (newValue: string) => void,
     label: string
     placeholderText?: string,
+    type?: "text" | "password"
 }
 
 export const TextInput: React.FC<TextInputProps> = (props) => {
-    const { value, onChange, label, placeholderText } = props;
+    const { value, onChange, label, placeholderText, type } = props;
     return <Form.Group controlId={label}>
         <Form.Label>{label}</Form.Label>
         <Form.Control
-            type="text"
+            type={type ?? "text"}
             placeholder={placeholderText}
             value={value}
             onChange={(e) => {

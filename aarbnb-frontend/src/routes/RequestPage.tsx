@@ -1,8 +1,8 @@
-import { Alert, Button } from "react-bootstrap"
-import { RequestModal } from "../layouts/RequestModal"
 import { useState } from "react";
-import { RestApplicationClient } from "../services/requestService";
-import { AppRequest } from "../types/types";
+import { Alert, Button } from "react-bootstrap";
+import { RequestModal } from "../layouts/RequestModal";
+import { RestApplicationClient } from "../services/restApplicationClient";
+import { AppRequest } from "../types";
 
 interface RequestPageProps {
     requestService: RestApplicationClient

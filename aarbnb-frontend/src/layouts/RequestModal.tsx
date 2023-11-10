@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Modal, ModalBody, ModalFooter, ModalHeader } from 'react-bootstrap';
-import { AppRequest } from '../types/types';
+import { AppRequest } from '../types';
 import { TextAreaInput, TextInput } from './Inputs';
 
 interface RequestModalProps {
