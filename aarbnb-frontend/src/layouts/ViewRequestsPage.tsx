@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { AppRequest, RequestService } from '../types';
+import React, { useEffect, useState } from "react";
+import { RequestService } from "../services/restApplicationClient";
+import { AppRequest } from "../types";
 
 interface ViewRequestsPageProps {
-    requestService: RequestService
+  requestService: RequestService;
 }
 
 export const ViewRequestsPage: React.FC<ViewRequestsPageProps> = (props) => {
-    const { requestService } = props;
+  const { requestService } = props;
 
-    const [allRequests, setAllRequests] = useState<AppRequest[]>([]);
+  const [allRequests, setAllRequests] = useState<AppRequest[]>([]);
 
-    useEffect(() => {
-        requestService.getRequests()
-            .then(requests => setAllRequests(requests))
-            .catch(e => console.log(e))
-    }, [requestService])
+  useEffect(() => {
+    requestService
+      .getRequests()
+      .then((requests) => setAllRequests(requests))
+      .catch((e) => console.log(e));
+  }, [requestService]);
 
-    return <>
-        {
-            allRequests.map(request => <div key={request.user + request.timestamp}>
-                
-            </div>)
-        }
+  return (
+    <>
+      {allRequests.map((request) => (
+        <div key={request.user + request.timestamp}></div>
+      ))}
     </>
-}
+  );
+};

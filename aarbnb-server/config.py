@@ -2,7 +2,7 @@ from datetime import timedelta
 
 from decouple import config
 
-DATABASE_URI = config("DATABASE_URL")
+DATABASE_URI: str = config("DATABASE_URL")
 if DATABASE_URI.startswith("postgres://"):
     DATABASE_URI = DATABASE_URI.replace("postgres://", "postgresql://", 1)
 

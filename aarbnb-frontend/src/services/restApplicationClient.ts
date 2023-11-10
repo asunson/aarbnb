@@ -1,5 +1,17 @@
-import { AppRequest, TokenRequest, TokenResponse } from "../types";
+import { AppRequest, TokenRequest, TokenResponse, UserRequest } from "../types";
 import { HttpClient, RestResponse } from "./httpClient";
+
+export type RequestService = Pick<
+  RestApplicationClient,
+  "getRequests" | "saveRequest"
+>;
+
+export type TokenService = Pick<
+  RestApplicationClient,
+  "getToken" | "removeToken"
+>;
+
+export type UserService = Pick<RestApplicationClient, "createUser">;
 
 export class RestApplicationClient {
   constructor(
@@ -20,6 +32,15 @@ export class RestApplicationClient {
       method: "POST",
       url: "/api/requests",
       data: appRequest,
+      token: this.token,
+    });
+  }
+
+  createUser(userRequest: UserRequest): RestResponse<string> {
+    return this.httpClient.request({
+      method: "POST",
+      url: "/api/users",
+      data: userRequest,
       token: this.token,
     });
   }

@@ -37,6 +37,7 @@ def handleRequests():
         appRequest = request.json
 
         newRequest = AppRequest(
+            id=newId,
             subject=appRequest["subject"],
             description=appRequest["description"],
             user=appRequest["user"],
@@ -56,19 +57,61 @@ def handleUsers():
         return User.query.all()
 
     elif request.method == "POST":
-        return []
+        create_user_request = request.json
+        is_new_user = create_user_request["id"] is None
+
+        if is_new_user:
+            newId = str(uuid.uuid4())
+            new_user = User(
+                id=newId,
+                email=create_user_request["email"],
+                name=create_user_request["name"],
+                phone=create_user_request["phone"],
+                password=create_user_request["password"],
+                is_host=create_user_request["isHost"],
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            return newId
+
+        id = create_user_request["id"]
+        existing_user = User.query.get(id)
+        # add error handling here
+
+        # TODO refactor to be smarter here and handle undefined/empty fields
+        existing_user.email = create_user_request["email"]
+        existing_user.name = create_user_request["name"]
+        existing_user.phone = create_user_request["phone"]
+        existing_user.password = create_user_request["password"]
+        existing_user.is_host = create_user_request["isHost"]
+
+        db.session.commit()
+        return id
 
 
 @app.route("/api/token", methods=["POST"])
 def create_token():
     email = request.json.get("email", None)
-    password = request.json.get("password", None)
-    if email != "test" or password != "test":
-        return {"success": "False"}, 401
+    if email is None:
+        return {"success": False}, 400
 
-    access_token = create_access_token(identity=email)
-    response = {"token": access_token, "success": True}
-    return response, 200
+    password = request.json.get("password", None)
+    if password is None:
+        return {"success": False}, 400
+
+    user: User | None = User.query.filter_by(email=email).first()
+    if User is None:
+        return {"success": False}, 400
+
+    is_test_creds = email == "test" and password == "test"
+    is_valid_creds = user.validate(password)
+
+    if is_test_creds or is_valid_creds:
+        access_token = create_access_token(identity=email)
+        response = {"token": access_token, "success": True}
+        return response, 200
+
+    return {"success": "False"}, 401
 
 
 @app.route("/api/logout", methods=["POST"])
