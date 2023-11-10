@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Button } from 'react-bootstrap/lib/InputGroup';
+import { Button } from 'react-bootstrap';
 import { useServicesContext } from '../context/ServicesContext';
 import { useTokenContext } from '../context/TokenContext';
 
