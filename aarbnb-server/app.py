@@ -17,6 +17,8 @@ from flask_jwt_extended import (
 from . import app, db
 from .models import AppRequest, User
 
+print("registering routes...")
+
 
 @app.route("/", defaults={"path": ""})
 def serve(path):
