@@ -54,7 +54,15 @@ def handleRequests():
 @jwt_required()
 def handleUsers():
     if request.method == "GET":
-        return User.query.all()
+        email = request.args.get("email")
+        
+        if email is None:
+            return User.query.all()
+
+        user: User | None = User.query.filter_by(email=email).first()
+        if user is None:
+            return FAILURE, 400
+        return user.serialize()
 
     if request.method == "PUT":
         user_request = request.json

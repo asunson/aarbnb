@@ -106,6 +106,17 @@ User can create custom shortcuts
 **When** I finish creating the custom request  
 **Then** I see a new icon/name under "Shortcuts"
 
+## Quick Start
+
+### Frontend
+
+`npm start`
+
+### Backend
+
+If using venv `./venv/Scripts/activate` (Windows) or `./venv/bin/activate` (MacOs)
+`flask --app app run`
+
 ## Gotchas
 
 Running `export DANGEROUSLY_DISABLE_HOST_CHECK=true` will get around a node issue for invalid allowedHosts when proxying to the server

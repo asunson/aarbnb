@@ -1,4 +1,4 @@
-from . import bcrypt, db
+from . import bcrypt, db, app
 
 
 class AppRequest(db.Model):
@@ -56,3 +56,7 @@ class User(db.Model):
 
     def validate(self, candidate: str) -> bool:
         return bcrypt.check_password_hash(self.password, candidate)
+
+# Important! This code to instantiate the sqlite db mmust follow all model definitions
+with app.app_context():
+    db.create_all()

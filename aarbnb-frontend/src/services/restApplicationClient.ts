@@ -2,6 +2,7 @@ import {
   AppRequest,
   SessionResponse,
   TokenRequest,
+  User,
   UserRequest,
 } from "../types";
 import { HttpClient, RestResponse } from "./httpClient";
@@ -22,7 +23,7 @@ export class RestApplicationClient {
   constructor(
     private httpClient: HttpClient,
     private token: string | undefined
-  ) {}
+  ) { }
 
   getRequests(): RestResponse<AppRequest[]> {
     return this.httpClient.request({
@@ -62,5 +63,13 @@ export class RestApplicationClient {
       method: "POST",
       url: "api/logout",
     });
+  }
+
+  getUserByEmail(email: string): RestResponse<User> {
+    return this.httpClient.request({
+      method: "GET",
+      url: `api/users?email=${email}`,
+      token: this.token,
+    })
   }
 }

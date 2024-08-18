@@ -21,6 +21,7 @@ export const HomePage: React.FC = () => {
       .catch((e) => console.log(e))
       .finally(() => setShowModal(false));
   };
+
   return (
     <>
       <Alert
