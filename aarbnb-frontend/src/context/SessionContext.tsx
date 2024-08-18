@@ -63,7 +63,7 @@ export const SessionContextProvider: React.FC<{
 
   const [token, setToken] = useState<string | null>(getToken());
   const [user, setUser] = useState<User | null>(null);
-  console.log("finding user", user)
+  console.log(token)
 
   return (
     <SessionContext.Provider

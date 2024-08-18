@@ -35,6 +35,7 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
       tokenService
         .getToken(tokenRequest)
         .then((response) => {
+          console.log("have token", response)
           saveToken(response.token);
           setUser(response?.user ?? null);
         })
@@ -66,7 +67,10 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
         label="Password"
         type="password"
       />
-      <Button type="submit" onClick={() => login(loginForm)}>
+      <Button type="submit" onClick={(e) => {
+        e.preventDefault()
+        login(loginForm)
+      }}>
         Log-in
       </Button>
       <Button onClick={() => setShowLogin(false)}>Sign-up</Button>
@@ -133,7 +137,10 @@ const SignUpView: React.FC<{ setShowLogin: (value: boolean) => void }> = (
         label="Code"
         placeholderText="Text me for the code to create a new account (if you forgot)"
       />
-      <Button type="submit" onClick={() => signUp(signupForm)}>
+      <Button type="submit" onClick={(e) => {
+        e.preventDefault()
+        signUp(signupForm)
+      }}>
         Submit
       </Button>
     </form>
