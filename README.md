@@ -6,7 +6,7 @@ One stop shop for all things Aarbnb
 
 - [x] User can see an application
 - [x] Host can see all submitted requests
-- [ ] Only authorised users should be able to visit the application
+- [x] Only authorised users should be able to visit the application
 - [x] User can create an account
 - [ ] Host has their own "Host" view
 - [ ] Host can manage requests

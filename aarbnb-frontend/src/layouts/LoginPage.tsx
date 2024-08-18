@@ -44,7 +44,7 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
   );
 
   return (
-    <div className="form-login">
+    <form className="form-login">
       <TextInput
         value={loginForm.email}
         onChange={(email: string) =>
@@ -70,7 +70,7 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
         Log-in
       </Button>
       <Button onClick={() => setShowLogin(false)}>Sign-up</Button>
-    </div>
+    </form>
   );
 };
 
@@ -84,6 +84,7 @@ const SignUpView: React.FC<{ setShowLogin: (value: boolean) => void }> = (
     name: "",
     phone: "",
     password: "",
+    code: "",
     isHost: false,
   });
 
@@ -105,7 +106,7 @@ const SignUpView: React.FC<{ setShowLogin: (value: boolean) => void }> = (
   );
 
   return (
-    <>
+    <form>
       <TextInput
         {...inputProps.to("email").get()}
         label="E-mail"
@@ -127,9 +128,14 @@ const SignUpView: React.FC<{ setShowLogin: (value: boolean) => void }> = (
         label="Password"
         placeholderText="PLEASE do not use a real password. I'm not doing anything smart with these"
       />
+      <TextInput
+        {...inputProps.to("code").get()}
+        label="Code"
+        placeholderText="Text me for the code to create a new account (if you forgot)"
+      />
       <Button type="submit" onClick={() => signUp(signupForm)}>
         Submit
       </Button>
-    </>
+    </form>
   );
 };

@@ -19,7 +19,7 @@ export interface User {
   isHost: boolean;
 }
 
-export type UserRequest = Omit<User, "id"> & { password: string };
+export type UserRequest = Omit<User, "id"> & { password: string, code: string };
 export interface SessionResponse extends ApiSuccessResponse {
   token: string;
   user: User | null;
