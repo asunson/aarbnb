@@ -1,6 +1,6 @@
 import json
 import time
-
+import os
 # import request_store
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -86,6 +86,9 @@ def handleUsers():
 @app.route("/api/users/new", methods=["POST"])
 def create_user():
     create_user_request = request.json
+    if (create_user_request["code"] != os.getenv("NEW_ACCOUNT_CODE")):
+        return FAILURE, 401
+
     newId = str(uuid.uuid4())
     new_user = User(
         id=newId,
