@@ -1,10 +1,10 @@
 export interface Booking {
-  id: string,
-  userId: string
-  startDate: string // dateisostring
-  endDate: string // dateisostring
-  status: string
-  createdAt: number
+  id: string;
+  userId: string;
+  startDate: string; // dateisostring
+  endDate: string; // dateisostring
+  status: string;
+  createdAt: number;
 }
 
 export interface AppRequest {
@@ -28,7 +28,7 @@ export interface User {
   isHost: boolean;
 }
 
-export type UserRequest = Omit<User, "id"> & { password: string, code: string };
+export type UserRequest = Omit<User, "id"> & { password: string; code: string };
 export interface SessionResponse extends ApiSuccessResponse {
   token: string;
   user: User | null;

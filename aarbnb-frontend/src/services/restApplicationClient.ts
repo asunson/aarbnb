@@ -8,7 +8,7 @@ import {
 } from "../types";
 import { HttpClient, RestResponse } from "./httpClient";
 
-export type BookingService = Pick<RestApplicationClient, "createBooking">
+export type BookingService = Pick<RestApplicationClient, "createBooking">;
 
 export type RequestService = Pick<
   RestApplicationClient,
@@ -26,7 +26,7 @@ export class RestApplicationClient {
   constructor(
     private httpClient: HttpClient,
     private token: string | undefined
-  ) { }
+  ) {}
 
   getRequests(): RestResponse<AppRequest[]> {
     return this.httpClient.request({
@@ -73,14 +73,14 @@ export class RestApplicationClient {
       method: "GET",
       url: `api/users?email=${email}`,
       token: this.token,
-    })
+    });
   }
 
   createBooking(): RestResponse<Booking> {
     return this.httpClient.request({
       method: "POST",
       url: `api/bookings`,
-      token: this.token
-    })
+      token: this.token,
+    });
   }
 }
