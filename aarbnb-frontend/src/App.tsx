@@ -4,7 +4,7 @@ import { useSessionContext } from "./context/SessionContext";
 import { Header } from "./layouts/Header";
 import { HomePage } from "./layouts/HomePage";
 import { LoginPage } from "./layouts/LoginPage";
-import { HostPage } from "./routes/HostPage";
+import { BookingPage, HostPage } from "./routes";
 import "./styles/App.scss";
 
 const router = createBrowserRouter([
@@ -16,6 +16,10 @@ const router = createBrowserRouter([
     path: "/host",
     element: <HostPage />,
   },
+  {
+    path: "/booking",
+    element: <BookingPage />,
+  }
 ]);
 
 function App() {

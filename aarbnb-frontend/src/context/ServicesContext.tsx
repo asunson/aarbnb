@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { HttpClient } from "../services/httpClient";
 import {
+  BookingService,
   RequestService,
   RestApplicationClient,
   TokenService,
@@ -13,12 +14,14 @@ const unauthenticatedRestApplicationClient = new RestApplicationClient(
 );
 
 interface ServicesContextProps {
+  bookingService: BookingService;
   requestService: RequestService;
   tokenService: TokenService;
   userService: UserService;
 }
 
 const ServicesContext = createContext<ServicesContextProps>({
+  bookingService: unauthenticatedRestApplicationClient,
   requestService: unauthenticatedRestApplicationClient,
   tokenService: unauthenticatedRestApplicationClient,
   userService: unauthenticatedRestApplicationClient,
@@ -38,6 +41,7 @@ export const ServicesContextProvider: React.FC<{
   return (
     <ServicesContext.Provider
       value={{
+        bookingService: restApplicationClient,
         requestService: restApplicationClient,
         tokenService: restApplicationClient,
         userService: restApplicationClient,

@@ -1,11 +1,14 @@
 import {
   AppRequest,
+  Booking,
   SessionResponse,
   TokenRequest,
   User,
   UserRequest,
 } from "../types";
 import { HttpClient, RestResponse } from "./httpClient";
+
+export type BookingService = Pick<RestApplicationClient, "createBooking">
 
 export type RequestService = Pick<
   RestApplicationClient,
@@ -70,6 +73,14 @@ export class RestApplicationClient {
       method: "GET",
       url: `api/users?email=${email}`,
       token: this.token,
+    })
+  }
+
+  createBooking(): RestResponse<Booking> {
+    return this.httpClient.request({
+      method: "POST",
+      url: `api/bookings`,
+      token: this.token
     })
   }
 }

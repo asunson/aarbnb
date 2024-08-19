@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { Alert, Button } from "react-bootstrap";
+import { Alert, Button, ButtonGroup } from "react-bootstrap";
 import { useServicesContext } from "../context/ServicesContext";
 import { useSessionContext } from "../context/SessionContext";
 import { AppRequest, User } from "../types";
 import { RequestModal } from "./RequestModal";
+import { Link } from "react-router-dom";
+// import {  } from "react-router-dom";
 
 export const HomePage: React.FC = () => {
   const { requestService } = useServicesContext();
   const { user } = useSessionContext();
+  // const history = useHistory();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [requestSubmitted, setRequestSubmitted] = useState<boolean>(false);
 
@@ -43,6 +46,11 @@ export const HomePage: React.FC = () => {
       <Button onClick={() => setShowModal(true)} className="mtr">
         Make a Request
       </Button>
+      <div className="btn btn-primary mlr mtr">
+        <Link to="/booking" className="link-button">
+          Make a Booking
+        </Link>
+      </div>
     </>
   );
 };

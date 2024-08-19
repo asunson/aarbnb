@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { SessionContextProvider } from "./context/SessionContext";
 import "./index.css";
+import "./output.css";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(

@@ -1,3 +1,12 @@
+export interface Booking {
+  id: string,
+  userId: string
+  startDate: string // dateisostring
+  endDate: string // dateisostring
+  status: string
+  createdAt: number
+}
+
 export interface AppRequest {
   id?: string;
   subject: string;
