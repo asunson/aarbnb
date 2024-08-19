@@ -15,7 +15,7 @@ from flask_jwt_extended import (
 )
 
 from . import app, db
-from .models import AppRequest, User
+from .models import AppRequest, Booking, User
 
 
 @app.route("/", defaults={"path": ""})
@@ -41,7 +41,7 @@ def handleRequests():
             subject=appRequest["subject"],
             description=appRequest["description"],
             user=appRequest["user"],
-            timestamp=int(time.time()) * 1000,
+            timestamp=now_millis(),
         )
 
         db.session.add(newRequest)
@@ -49,6 +49,32 @@ def handleRequests():
 
         return newId
 
+@app.route("/api/bookings", methods=["GET", "POST"])
+@jwt_required()
+def handleBookings():
+    if request.method == "GET":
+        bookings = Booking.query.all()
+        return jsonify([b.serialize() for b in bookings])
+
+    if request.method == "POST":
+        booking_request = request.json
+        print(booking_request["start_date"])
+        print(booking_request["end_date"])
+
+        id = str(uuid.uuid4())
+        booking = Booking(
+            id=id,
+            user_id=booking_request["user_id"],
+            start_date=booking_request["start_date"],
+            end_date=booking_request["end_date"],
+            status=booking_request["status"],
+            created_at=now_millis(),
+        )
+        
+        db.session.add(booking)
+        db.session.commit()
+
+        return id
 
 @app.route("/api/users", methods=["GET", "PUT"])
 @jwt_required()
@@ -161,3 +187,6 @@ def refresh_expiring_jwts(response):
 
 
 FAILURE = {"success": False}
+
+def now_millis():
+    return int(time.time()) * 1000

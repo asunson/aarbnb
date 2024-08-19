@@ -35,7 +35,6 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
       tokenService
         .getToken(tokenRequest)
         .then((response) => {
-          console.log("have token", response)
           saveToken(response.token);
           setUser(response?.user ?? null);
         })

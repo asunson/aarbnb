@@ -1,4 +1,5 @@
 from . import bcrypt, db, app
+from .utils import date_to_iso_string
 
 
 class AppRequest(db.Model):
@@ -26,6 +27,34 @@ class AppRequest(db.Model):
             "timestamp": self.timestamp,
         }
 
+class Booking(db.Model):
+    __tablename__ = "booking"
+
+    id = db.Column(db.String, primary_key=True)
+    user_id = db.Column(db.String)
+    start_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
+    status = db.Column(db.String)
+    created_at = db.Column(db.Integer)
+
+
+    def __init__(self, id, user_id, start_date, end_date, status, created_at):
+        self.id = id
+        self.user_id = user_id
+        self.start_date = start_date
+        self.end_date = end_date
+        self.status = status
+        self.created_at = created_at
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "start_date": date_to_iso_string(self.start_date),
+            "end_date": date_to_iso_string(self.end_date),
+            "status": self.status,
+            "created_at": self.created_at,
+        }
 
 class User(db.Model):
     __tablename__ = "user"
