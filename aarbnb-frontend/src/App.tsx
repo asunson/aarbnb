@@ -5,7 +5,6 @@ import { Header } from "./layouts/Header";
 import { HomePage } from "./layouts/HomePage";
 import { LoginPage } from "./layouts/LoginPage";
 import { BookingPage, HostPage } from "./routes";
-import "./styles/App.scss";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +18,7 @@ const router = createBrowserRouter([
   {
     path: "/booking",
     element: <BookingPage />,
-  }
+  },
 ]);
 
 function App() {
@@ -28,7 +27,7 @@ function App() {
   return (
     <ServicesContextProvider token={token}>
       <Header />
-      <div className="App-container">
+      <div className="py-4 px-48 text-center bg-stone-100 h-screen flex flex-col">
         {token != null ? <RouterProvider router={router} /> : <LoginPage />}
       </div>
     </ServicesContextProvider>

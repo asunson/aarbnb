@@ -1,10 +1,21 @@
 import React, { useCallback, useState } from "react";
-import { Button } from "react-bootstrap";
 import { useServicesContext } from "../context/ServicesContext";
 import { useSessionContext } from "../context/SessionContext";
 import { TokenRequest, UserRequest } from "../types";
 import { Chainable } from "../utils/chainable";
 import { TextInput } from "./Inputs";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Button } from "../components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../components/ui/form";
+import { Input } from "../components/ui/input";
 
 export const LoginPage: React.FC = () => {
   const [showLogin, setShowLogin] = useState<boolean>(true);
@@ -23,12 +34,14 @@ interface LoginViewProps {
 
 const LoginView: React.FC<LoginViewProps> = (props) => {
   const { setShowLogin } = props;
-  const [loginForm, setLoginForm] = useState<TokenRequest>({
-    email: "",
-    password: "",
-  });
   const { tokenService } = useServicesContext();
   const { saveToken, setUser } = useSessionContext();
+  const form = useForm<TokenRequest>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   const login = useCallback(
     (tokenRequest: TokenRequest) => {
@@ -42,38 +55,41 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
     },
     [saveToken, setUser, tokenService]
   );
+  const onSubmit: SubmitHandler<TokenRequest> = login;
 
   return (
-    <form className="form-login">
-      <TextInput
-        value={loginForm.email}
-        onChange={(email: string) =>
-          setLoginForm({
-            ...loginForm,
-            email,
-          })
-        }
-        label="E-mail"
-      />
-      <TextInput
-        value={loginForm.password}
-        onChange={(password: string) =>
-          setLoginForm({
-            ...loginForm,
-            password,
-          })
-        }
-        label="Password"
-        type="password"
-      />
-      <Button type="submit" onClick={(e) => {
-        e.preventDefault()
-        login(loginForm)
-      }}>
-        Log-in
-      </Button>
-      <Button onClick={() => setShowLogin(false)}>Sign-up</Button>
-    </form>
+    <Form {...form}>
+      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input {...field} type="password" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+        <Button onClick={() => setShowLogin(false)}>Sign-up</Button>
+      </form>
+    </Form>
   );
 };
 
@@ -136,10 +152,13 @@ const SignUpView: React.FC<{ setShowLogin: (value: boolean) => void }> = (
         label="Code"
         placeholderText="Text me for the code to create a new account (if you forgot)"
       />
-      <Button type="submit" onClick={(e) => {
-        e.preventDefault()
-        signUp(signupForm)
-      }}>
+      <Button
+        type="submit"
+        onClick={(e) => {
+          e.preventDefault();
+          signUp(signupForm);
+        }}
+      >
         Submit
       </Button>
     </form>

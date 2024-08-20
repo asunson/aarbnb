@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
   }, [tokenService, setUser, removeToken]);
 
   return (
-    <div className="App-header">
+    <div className="flex min-h-16 justify-between text-xl px-4 items-center bg-slate-800 text-white">
       <div>Aarbnb</div>
       <Button onClick={logout}>Logout</Button>
     </div>

@@ -2,18 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { SessionContextProvider } from "./context/SessionContext";
-import "./index.css";
-import "./output.css";
 import reportWebVitals from "./reportWebVitals";
+import "./styles/global.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <SessionContextProvider>
-      <App />
-    </SessionContextProvider>
+    <div className="h-screen flex flex-col">
+      <SessionContextProvider>
+        <App />
+      </SessionContextProvider>
+    </div>
   </React.StrictMode>
 );
 
