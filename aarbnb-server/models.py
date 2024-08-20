@@ -49,11 +49,11 @@ class Booking(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
-            "start_date": date_to_iso_string(self.start_date),
-            "end_date": date_to_iso_string(self.end_date),
+            "userId": self.user_id,
+            "startDate": date_to_iso_string(self.start_date),
+            "endDate": date_to_iso_string(self.end_date),
             "status": self.status,
-            "created_at": self.created_at,
+            "createdAt": self.created_at,
         }
 
 class User(db.Model):

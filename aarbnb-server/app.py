@@ -31,17 +31,15 @@ def handleRequests():
         return jsonify([a.serialize() for a in appRequests])
 
     elif request.method == "POST":
-        # savedId = request_store.saveRequest(request.data)
-        newId = str(uuid.uuid1())
-
         appRequest = request.json
+        newId = get_new_id()
 
         newRequest = AppRequest(
             id=newId,
             subject=appRequest["subject"],
             description=appRequest["description"],
             user=appRequest["user"],
-            timestamp=now_millis(),
+            timestamp=get_now_millis(),
         )
 
         db.session.add(newRequest)
@@ -61,14 +59,14 @@ def handleBookings():
         print(booking_request["start_date"])
         print(booking_request["end_date"])
 
-        id = str(uuid.uuid4())
+        id = get_new_id()
         booking = Booking(
             id=id,
             user_id=booking_request["user_id"],
             start_date=booking_request["start_date"],
             end_date=booking_request["end_date"],
             status=booking_request["status"],
-            created_at=now_millis(),
+            created_at=get_now_millis(),
         )
         
         db.session.add(booking)
@@ -115,7 +113,7 @@ def create_user():
     if (create_user_request["code"] != os.getenv("NEW_ACCOUNT_CODE")):
         return FAILURE, 401
 
-    newId = str(uuid.uuid4())
+    newId = get_new_id()
     new_user = User(
         id=newId,
         email=create_user_request["email"],
@@ -188,5 +186,8 @@ def refresh_expiring_jwts(response):
 
 FAILURE = {"success": False}
 
-def now_millis():
+def get_now_millis():
     return int(time.time()) * 1000
+
+def get_new_id():
+    return str(uuid.uuid4())

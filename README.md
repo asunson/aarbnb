@@ -110,7 +110,8 @@ User can create custom shortcuts
 
 ### Frontend
 
-`npm start`
+UI: `npm start`
+Tailwind: `npx tailwindcss -i ./src/input.css -o ./src/output.css --watch`
 
 ### Backend
 
