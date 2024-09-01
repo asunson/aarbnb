@@ -1,8 +1,3 @@
-import {
-  DialogContent,
-  DialogDescription,
-  DialogTrigger,
-} from "@radix-ui/react-dialog";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -15,7 +10,14 @@ import {
   AlertDialogTitle,
 } from "../components/ui/alert-dialog";
 import { Button } from "../components/ui/button";
-import { Dialog, DialogFooter, DialogTitle } from "../components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+  DialogTrigger,
+} from "../components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -28,6 +30,7 @@ import { Input } from "../components/ui/input";
 import { useServicesContext } from "../context/ServicesContext";
 import { useSessionContext } from "../context/SessionContext";
 import { AppRequest, User } from "../types";
+import { DateTime } from "luxon";
 
 export const HomePage: React.FC = () => {
   const { requestService } = useServicesContext();
@@ -40,7 +43,7 @@ export const HomePage: React.FC = () => {
       subject: "",
       description: "",
       user: user?.id ?? "",
-      timestamp: new Date().valueOf(),
+      timestamp: DateTime.now().valueOf(),
     },
   });
 
