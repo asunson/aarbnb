@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -27,10 +28,10 @@ import {
   FormMessage,
 } from "../components/ui/form";
 import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
 import { useServicesContext } from "../context/ServicesContext";
 import { useSessionContext } from "../context/SessionContext";
 import { AppRequest, User } from "../types";
-import { DateTime } from "luxon";
 
 export const HomePage: React.FC = () => {
   const { requestService } = useServicesContext();
@@ -106,7 +107,7 @@ export const HomePage: React.FC = () => {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Textarea {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
