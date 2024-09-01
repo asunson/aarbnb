@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { User } from "../types";
 import { RestApplicationClient } from "../services/restApplicationClient";
 import { HttpClient } from "../services/httpClient";
@@ -31,8 +37,8 @@ export const SessionContextProvider: React.FC<{
 
   const getUserFromToken = useCallback(async (): Promise<User | null> => {
     const userToken = localStorage.getItem("token");
-    const email = getEmailFromToken(userToken)
-    if (email == null) return null
+    const email = getEmailFromToken(userToken);
+    if (email == null) return null;
 
     const restApplicationClient = new RestApplicationClient(
       new HttpClient(),
@@ -40,12 +46,12 @@ export const SessionContextProvider: React.FC<{
     );
 
     try {
-      return await restApplicationClient.getUserByEmail(email)
+      return await restApplicationClient.getUserByEmail(email);
     } catch (e) {
-      console.error(e)
-      return null
+      console.error(e);
+      return null;
     }
-  }, [])
+  }, []);
 
   const saveToken = useCallback((userToken: string): void => {
     localStorage.setItem("token", userToken);
@@ -58,12 +64,11 @@ export const SessionContextProvider: React.FC<{
   }, []);
 
   useEffect(() => {
-    getUserFromToken().then(user => setUser(user))
-  }, [getUserFromToken])
+    getUserFromToken().then((user) => setUser(user));
+  }, [getUserFromToken]);
 
   const [token, setToken] = useState<string | null>(getToken());
   const [user, setUser] = useState<User | null>(null);
-  console.log(token)
 
   return (
     <SessionContext.Provider
@@ -75,8 +80,8 @@ export const SessionContextProvider: React.FC<{
 };
 
 const getEmailFromToken = (token: string | null) => {
-  if (token == null) return null
-  const claims = JSON.parse(atob(token.split('.')[1]))
+  if (token == null) return null;
+  const claims = JSON.parse(atob(token.split(".")[1]));
 
-  return claims.sub
-}
+  return claims.sub;
+};

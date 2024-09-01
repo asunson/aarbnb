@@ -1,18 +1,48 @@
+import {
+  DialogContent,
+  DialogDescription,
+  DialogTrigger,
+} from "@radix-ui/react-dialog";
 import React, { useState } from "react";
-import { Alert, Button, ButtonGroup } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "../components/ui/alert-dialog";
+import { Button } from "../components/ui/button";
+import { Dialog, DialogFooter, DialogTitle } from "../components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../components/ui/form";
+import { Input } from "../components/ui/input";
 import { useServicesContext } from "../context/ServicesContext";
 import { useSessionContext } from "../context/SessionContext";
 import { AppRequest, User } from "../types";
-import { RequestModal } from "./RequestModal";
-import { Link } from "react-router-dom";
-// import {  } from "react-router-dom";
 
 export const HomePage: React.FC = () => {
   const { requestService } = useServicesContext();
   const { user } = useSessionContext();
-  // const history = useHistory();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [requestSubmitted, setRequestSubmitted] = useState<boolean>(false);
+
+  const form = useForm<AppRequest>({
+    defaultValues: {
+      subject: "",
+      description: "",
+      user: user?.id ?? "",
+      timestamp: new Date().valueOf(),
+    },
+  });
 
   const onConfirm = (request: AppRequest) => {
     requestService
@@ -27,25 +57,66 @@ export const HomePage: React.FC = () => {
 
   return (
     <>
-      <Alert
-        variant="success"
-        onClose={() => setRequestSubmitted(false)}
-        show={requestSubmitted}
-        dismissible
-      >
-        Your request has succuessfully been submitted!
-      </Alert>
-
-      <RequestModal
-        showModal={showModal}
-        onConfirm={onConfirm}
-        onCancel={() => setShowModal(false)}
-      />
-
       <div>{getWelcomeText(user)}</div>
-      <Button onClick={() => setShowModal(true)} className="mtr">
-        Make a Request
-      </Button>
+      <AlertDialog
+        open={requestSubmitted}
+        onOpenChange={(open) => setRequestSubmitted(open)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Your request has succuessfully been submitted!
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <Dialog open={showModal} onOpenChange={(open) => setShowModal(open)}>
+        <DialogTrigger asChild>
+          <Button onClick={() => setShowModal(true)}>Make a Request</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogTitle>Make a Request</DialogTitle>
+          <DialogDescription>Please be nice</DialogDescription>
+          <Form {...form}>
+            <form className="space-y-8" onSubmit={form.handleSubmit(onConfirm)}>
+              <FormField
+                control={form.control}
+                name="subject"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Subject</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <DialogFooter>
+                <Button type="submit">Submit</Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+
       <div className="btn btn-primary mlr mtr">
         <Link to="/booking" className="link-button">
           Make a Booking

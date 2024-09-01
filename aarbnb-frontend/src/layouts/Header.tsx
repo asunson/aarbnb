@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
-import { Button } from "react-bootstrap";
 import { useServicesContext } from "../context/ServicesContext";
 import { useSessionContext } from "../context/SessionContext";
+import { Button } from "../components/ui/button";
 
 export const Header: React.FC = () => {
   const { tokenService } = useServicesContext();
@@ -18,9 +18,11 @@ export const Header: React.FC = () => {
   }, [tokenService, setUser, removeToken]);
 
   return (
-    <div className="flex min-h-16 justify-between text-xl px-4 items-center bg-slate-800 text-white">
+    <div className="flex min-h-16 justify-between text-xl px-4 items-center bg-primary text-white">
       <div>Aarbnb</div>
-      <Button onClick={logout}>Logout</Button>
+      <Button className="bg-slate-600 text-primary-foreground" onClick={logout}>
+        Logout
+      </Button>
     </div>
   );
 };

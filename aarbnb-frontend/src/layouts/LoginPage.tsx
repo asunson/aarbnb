@@ -1,21 +1,20 @@
 import React, { useCallback, useState } from "react";
-import { useServicesContext } from "../context/ServicesContext";
-import { useSessionContext } from "../context/SessionContext";
-import { TokenRequest, UserRequest } from "../types";
-import { Chainable } from "../utils/chainable";
-import { TextInput } from "./Inputs";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "../components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "../components/ui/form";
 import { Input } from "../components/ui/input";
+import { useServicesContext } from "../context/ServicesContext";
+import { useSessionContext } from "../context/SessionContext";
+import { TokenRequest, UserRequest } from "../types";
+import { Chainable } from "../utils/chainable";
+import { TextInput } from "./Inputs";
 
 export const LoginPage: React.FC = () => {
   const [showLogin, setShowLogin] = useState<boolean>(true);

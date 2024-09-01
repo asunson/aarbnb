@@ -34,6 +34,9 @@ def handleRequests():
         appRequest = request.json
         newId = get_new_id()
 
+        print(get_jwt_identity())
+        # user: User | None = User.query.filter_by(email=email).first()
+
         newRequest = AppRequest(
             id=newId,
             subject=appRequest["subject"],
