@@ -13,8 +13,6 @@ import { Input } from "../components/ui/input";
 import { useServicesContext } from "../context/ServicesContext";
 import { useSessionContext } from "../context/SessionContext";
 import { TokenRequest, UserRequest } from "../types";
-import { Chainable } from "../utils/chainable";
-import { TextInput } from "./Inputs";
 
 export const LoginPage: React.FC = () => {
   const [showLogin, setShowLogin] = useState<boolean>(true);
@@ -97,18 +95,16 @@ const SignUpView: React.FC<{ setShowLogin: (value: boolean) => void }> = (
 ) => {
   const { setShowLogin } = props;
   const { userService } = useServicesContext();
-  const [signupForm, setSignupForm] = useState<UserRequest>({
-    email: "",
-    name: "",
-    phone: "",
-    password: "",
-    code: "",
-    isHost: false,
-  });
 
-  const inputProps: Chainable<UserRequest> = new Chainable({
-    value: signupForm,
-    onChange: setSignupForm,
+  const form = useForm<UserRequest>({
+    defaultValues: {
+      email: "",
+      name: "",
+      phone: "",
+      password: "",
+      code: "",
+      isHost: false,
+    },
   });
 
   const signUp = useCallback(
@@ -124,42 +120,85 @@ const SignUpView: React.FC<{ setShowLogin: (value: boolean) => void }> = (
   );
 
   return (
-    <form>
-      <TextInput
-        {...inputProps.to("email").get()}
-        label="E-mail"
-        placeholderText="Need an email to contact you at"
-      />
-      <TextInput
-        {...inputProps.to("name").get()}
-        label="Name"
-        placeholderText="Who are you"
-      />
-      <TextInput
-        {...inputProps.to("phone").get()}
-        label="Phone"
-        placeholderText="XXX-XXX-XXXX"
-      />
-      <TextInput
-        {...inputProps.to("password").get()}
-        type="password"
-        label="Password"
-        placeholderText="PLEASE do not use a real password. I'm not doing anything smart with these"
-      />
-      <TextInput
-        {...inputProps.to("code").get()}
-        label="Code"
-        placeholderText="Text me for the code to create a new account (if you forgot)"
-      />
-      <Button
-        type="submit"
-        onClick={(e) => {
-          e.preventDefault();
-          signUp(signupForm);
-        }}
-      >
-        Submit
-      </Button>
-    </form>
+    <Form {...form}>
+      <form className="space-y-8" onSubmit={form.handleSubmit(signUp)}>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>E-mail</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Need an email to contact you at"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Who are you?" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone</FormLabel>
+              <FormControl>
+                <Input placeholder="XXX-XXX-XXXX" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="PLEASE do not use a real password. I'm not doing anything smart with these"
+                  type="password"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="code"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Code</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Text me for the code to create a new account (if you forgot)"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
 };
