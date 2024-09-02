@@ -21,7 +21,6 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.52.2",
     "react-router-dom": "^6.26.1",
-    "react-scripts": "^5.0.1",
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "^3.4.10",
     "tailwindcss-animate": "^1.0.7",
@@ -30,10 +29,10 @@
     "zod": "^3.23.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "dev": "vite"
   },
   "eslintConfig": {
     "extends": [
@@ -56,11 +55,17 @@
   "devDependencies": {
     "@types/jest": "^27.5.2",
     "@types/luxon": "^3.3.4",
-    "@types/node": "^16.11.58",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^9.9.1",
     "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.6"
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "vite": "^5.4.2",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-tsconfig-paths": "^5.0.1"
   },
   "proxy": "http://localhost:5000"
 }

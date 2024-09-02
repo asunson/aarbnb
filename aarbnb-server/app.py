@@ -33,6 +33,7 @@ def handleRequests():
     elif request.method == "POST":
         appRequest = request.json
         newId = get_new_id()
+        print("something is happening")
 
         print(get_jwt_identity())
         # user: User | None = User.query.filter_by(email=email).first()
