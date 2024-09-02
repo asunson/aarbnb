@@ -60,7 +60,7 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <>
+    <div>
       <div>{getWelcomeText(user)}</div>
       <AlertDialog
         open={requestSubmitted}
@@ -78,55 +78,58 @@ export const HomePage: React.FC = () => {
         </AlertDialogContent>
       </AlertDialog>
 
-      <Dialog open={showModal} onOpenChange={(open) => setShowModal(open)}>
-        <DialogTrigger asChild>
-          <Button onClick={() => setShowModal(true)}>Make a Request</Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogTitle>Make a Request</DialogTitle>
-          <DialogDescription>Please be nice</DialogDescription>
-          <Form {...form}>
-            <form className="space-y-8" onSubmit={form.handleSubmit(onConfirm)}>
-              <FormField
-                control={form.control}
-                name="subject"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Subject</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Textarea {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <DialogFooter>
-                <Button type="submit">Submit</Button>
-              </DialogFooter>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
+      <div>
+        <Dialog open={showModal} onOpenChange={(open) => setShowModal(open)}>
+          <DialogTrigger asChild>
+            <Button onClick={() => setShowModal(true)}>Make a Request</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogTitle>Make a Request</DialogTitle>
+            <DialogDescription>Please be nice</DialogDescription>
+            <Form {...form}>
+              <form
+                className="space-y-8"
+                onSubmit={form.handleSubmit(onConfirm)}
+              >
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Subject</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description</FormLabel>
+                      <FormControl>
+                        <Textarea {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <DialogFooter>
+                  <Button type="submit">Submit</Button>
+                </DialogFooter>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
 
-      <div className="btn btn-primary mlr mtr">
-        <Link to="/booking" className="link-button">
-          Make a Booking
-        </Link>
+        <Button>
+          <Link to="/booking">Make a Booking</Link>
+        </Button>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -83,8 +83,8 @@ const LoginView: React.FC<LoginViewProps> = (props) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
         <Button onClick={() => setShowLogin(false)}>Sign-up</Button>
+        <Button type="submit">Login</Button>
       </form>
     </Form>
   );
