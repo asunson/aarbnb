@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../components/ui/card";
+} from "@components/card";
 
 export const HostPage: React.FC = () => {
   const { requestService } = useServicesContext();

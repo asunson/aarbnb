@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "../components/ui/button";
+import { Button } from "@components/button";
 import {
   Form,
   FormControl,
@@ -8,8 +8,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../components/ui/form";
-import { Input } from "../components/ui/input";
+} from "@components/form";
+import { Input } from "@components/input";
 import { useServicesContext } from "../context/ServicesContext";
 import { useSessionContext } from "../context/SessionContext";
 import { TokenRequest, UserRequest } from "../types";

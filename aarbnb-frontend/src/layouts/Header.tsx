@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useServicesContext } from "../context/ServicesContext";
 import { useSessionContext } from "../context/SessionContext";
-import { Button } from "../components/ui/button";
+import { Button } from "@components/button";
 
 export const Header: React.FC = () => {
   const { tokenService } = useServicesContext();
