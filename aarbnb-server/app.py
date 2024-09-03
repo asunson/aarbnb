@@ -27,7 +27,7 @@ def serve(path):
 def handleRequests():
     if request.method == "GET":
         appRequests = AppRequest.query.all()
-        # return jsonify([])
+        return jsonify([])
         return jsonify([a.serialize() for a in appRequests])
 
     elif request.method == "POST":
@@ -61,7 +61,7 @@ def handleBookings():
         return jsonify([b.serialize() for b in bookings])
 
     if request.method == "POST":
-        # return jsonify("success"), 200
+        return jsonify("success"), 200
 
         booking_request = request.json
         start_date = date_to_iso_string(booking_request["startDate"])
