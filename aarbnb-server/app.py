@@ -11,7 +11,7 @@ from flask_jwt_extended import (
     jwt_required,
     unset_jwt_cookies,
 )
-from .utils import date_to_iso_string
+from .utils import iso_string_to_date
 
 from . import app, db
 from .models import AppRequest, Booking, User
@@ -64,8 +64,8 @@ def handleBookings():
         # return jsonify("success"), 200
 
         booking_request = request.json
-        start_date = date_to_iso_string(booking_request["startDate"])
-        end_date = date_to_iso_string(booking_request["endDate"])
+        start_date = iso_string_to_date(booking_request["startDate"])
+        end_date = iso_string_to_date(booking_request["endDate"])
 
         id = get_new_id()
 
