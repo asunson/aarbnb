@@ -7,6 +7,19 @@ export interface Booking {
   createdAt: number;
 }
 
+export interface BookingRequest {
+  userId: string;
+  startDate: string; // dateisostring
+  startTime: string;
+  endDate: string; // dateisostring
+  endTime: string;
+}
+
+export enum BookingStatus {
+  REQUESTED = "Requested",
+  APPROVED = "Approved",
+}
+
 export interface AppRequest {
   id?: string;
   subject: string;

@@ -8,7 +8,7 @@ One stop shop for all things Aarbnb
 - [x] Host can see all submitted requests
 - [x] Only authorised users should be able to visit the application
 - [x] User can create an account
-- [ ] Host has their own "Host" view
+- [x] Host has their own "Host" view
 - [ ] Host can manage requests
 - [ ] Host is notified when requests are submitted
 - [ ] User should be notified when request statuses change

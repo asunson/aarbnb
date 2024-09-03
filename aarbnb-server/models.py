@@ -33,16 +33,20 @@ class Booking(db.Model):
     id = db.Column(db.String, primary_key=True)
     user_id = db.Column(db.String)
     start_date = db.Column(db.Date)
+    start_time = db.Column(db.String)
     end_date = db.Column(db.Date)
+    end_time = db.Column(db.String)
     status = db.Column(db.String)
     created_at = db.Column(db.Integer)
 
 
-    def __init__(self, id, user_id, start_date, end_date, status, created_at):
+    def __init__(self, id, user_id, start_date,start_time, end_date,end_time, status, created_at):
         self.id = id
         self.user_id = user_id
         self.start_date = start_date
+        self.start_time = start_time
         self.end_date = end_date
+        self.end_time = end_time
         self.status = status
         self.created_at = created_at
 
@@ -51,7 +55,9 @@ class Booking(db.Model):
             "id": self.id,
             "userId": self.user_id,
             "startDate": date_to_iso_string(self.start_date),
+            "start_time": self.start_time,
             "endDate": date_to_iso_string(self.end_date),
+            "end_time": self.end_time,
             "status": self.status,
             "createdAt": self.created_at,
         }

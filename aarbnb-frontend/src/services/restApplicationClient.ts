@@ -1,6 +1,8 @@
 import {
   AppRequest,
   Booking,
+  BookingRequest,
+  BookingStatus,
   SessionResponse,
   TokenRequest,
   User,
@@ -8,7 +10,10 @@ import {
 } from "../types";
 import { HttpClient, RestResponse } from "./httpClient";
 
-export type BookingService = Pick<RestApplicationClient, "createBooking">;
+export type BookingService = Pick<
+  RestApplicationClient,
+  "createBooking" | "getBookings"
+>;
 
 export type RequestService = Pick<
   RestApplicationClient,
@@ -76,11 +81,20 @@ export class RestApplicationClient {
     });
   }
 
-  createBooking(): RestResponse<Booking> {
+  getBookings(): RestResponse<Booking[]> {
+    return this.httpClient.request({
+      method: "GET",
+      url: `api/bookings`,
+      token: this.token,
+    });
+  }
+
+  createBooking(bookingRequest: BookingRequest): RestResponse<string> {
     return this.httpClient.request({
       method: "POST",
       url: `api/bookings`,
       token: this.token,
+      data: { ...bookingRequest, status: BookingStatus.REQUESTED },
     });
   }
 }

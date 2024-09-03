@@ -1,10 +1,8 @@
 import json
 import time
 import os
-# import request_store
 import uuid
 from datetime import datetime, timedelta, timezone
-
 from flask import jsonify, request, send_from_directory
 from flask_jwt_extended import (
     create_access_token,
@@ -13,6 +11,7 @@ from flask_jwt_extended import (
     jwt_required,
     unset_jwt_cookies,
 )
+from .utils import date_to_iso_string
 
 from . import app, db
 from .models import AppRequest, Booking, User
@@ -28,9 +27,11 @@ def serve(path):
 def handleRequests():
     if request.method == "GET":
         appRequests = AppRequest.query.all()
+        # return jsonify([])
         return jsonify([a.serialize() for a in appRequests])
 
     elif request.method == "POST":
+        # return jsonify("success"), 200
         appRequest = request.json
         newId = get_new_id()
         print("something is happening")
@@ -51,6 +52,7 @@ def handleRequests():
 
         return newId
 
+
 @app.route("/api/bookings", methods=["GET", "POST"])
 @jwt_required()
 def handleBookings():
@@ -59,31 +61,37 @@ def handleBookings():
         return jsonify([b.serialize() for b in bookings])
 
     if request.method == "POST":
+        # return jsonify("success"), 200
+
         booking_request = request.json
-        print(booking_request["start_date"])
-        print(booking_request["end_date"])
+        start_date = date_to_iso_string(booking_request["startDate"])
+        end_date = date_to_iso_string(booking_request["endDate"])
 
         id = get_new_id()
+
         booking = Booking(
             id=id,
-            user_id=booking_request["user_id"],
-            start_date=booking_request["start_date"],
-            end_date=booking_request["end_date"],
+            user_id=booking_request["userId"],
+            start_date=start_date,
+            start_time=booking_request["startTime"],
+            end_date=end_date,
+            end_time=booking_request["endTime"],
             status=booking_request["status"],
             created_at=get_now_millis(),
         )
-        
+
         db.session.add(booking)
         db.session.commit()
 
         return id
+
 
 @app.route("/api/users", methods=["GET", "PUT"])
 @jwt_required()
 def handleUsers():
     if request.method == "GET":
         email = request.args.get("email")
-        
+
         if email is None:
             return User.query.all()
 
@@ -114,7 +122,7 @@ def handleUsers():
 @app.route("/api/users/new", methods=["POST"])
 def create_user():
     create_user_request = request.json
-    if (create_user_request["code"] != os.getenv("NEW_ACCOUNT_CODE")):
+    if create_user_request["code"] != os.getenv("NEW_ACCOUNT_CODE"):
         return FAILURE, 401
 
     newId = get_new_id()
@@ -165,6 +173,11 @@ def create_token():
 
 @app.route("/api/logout", methods=["POST"])
 def logout():
+    app.logger.debug("this is a DEBUG message")
+    app.logger.info("this is an INFO message")
+    app.logger.warning("this is a WARNING message")
+    app.logger.error("this is an ERROR message")
+    app.logger.critical("this is a CRITICAL message")
     response = jsonify({"success": True})
     unset_jwt_cookies(response)
     return response, 200
@@ -190,8 +203,10 @@ def refresh_expiring_jwts(response):
 
 FAILURE = {"success": False}
 
+
 def get_now_millis():
     return int(time.time()) * 1000
+
 
 def get_new_id():
     return str(uuid.uuid4())
